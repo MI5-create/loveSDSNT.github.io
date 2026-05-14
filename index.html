@@ -1,0 +1,1977 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时代少年团 - Teenagers in Times 官方应援站</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;800&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans SC', 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        :root {
+            --primary-color: #FF6B9D;
+            --secondary-color: #4A90E2;
+            --text-color: #333;
+            --light-bg: #f9f9f9;
+            --card-bg: #ffffff;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+            --header-height: 80px;
+            --border-radius: 16px;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: var(--transition);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        body.dark-mode {
+            --light-bg: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #f0f0f0;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* 主题色切换动画 */
+        @keyframes colorShift {
+            0% { background-color: #FF6B9D; } /* 马嘉祺 - 月白星紫 */
+            14% { background-color: #FFB11B; } /* 丁程鑫 - 琥珀色 */
+            28% { background-color: #87CEEB; } /* 宋亚轩 - 浅空天胧 */
+            42% { background-color: #B0C4DE; } /* 刘耀文 - 耀月银白 */
+            56% { background-color: #7CFC00; } /* 张真源 - 水玉暖炽 */
+            70% { background-color: #FF4500; } /* 严浩翔 - 珊瑚红 */
+            84% { background-color: #FF69B4; } /* 贺峻霖 - 春海月明 */
+            100% { background-color: #FF6B9D; }
+        }
+        
+        .color-shift-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0.05;
+            animation: colorShift 60s infinite linear;
+        }
+        
+        /* 导航栏 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--header-height);
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+        
+        .dark-mode .navbar {
+            background-color: rgba(30, 30, 30, 0.95);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        
+        .logo i {
+            font-size: 2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            background-color: var(--primary-color);
+            bottom: 0;
+            left: 0;
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        /* 主题切换按钮 */
+        .theme-toggle {
+            background: none;
+            border: none;
+            width: 50px;
+            height: 30px;
+            border-radius: 15px;
+            background-color: #e0e0e0;
+            position: relative;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .dark-mode .theme-toggle {
+            background-color: #333;
+        }
+        
+        .theme-toggle:before {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: white;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .dark-mode .theme-toggle:before {
+            transform: translateX(20px);
+            background-color: #FFD700;
+        }
+        
+        .theme-toggle i {
+            font-size: 0.8rem;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .theme-toggle .fa-sun {
+            left: 6px;
+            color: #FFA500;
+        }
+        
+        .theme-toggle .fa-moon {
+            right: 6px;
+            color: #666;
+        }
+        
+        /* 主容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-top: calc(var(--header-height) + 20px);
+        }
+        
+        /* 英雄区域 */
+        .hero {
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.1), rgba(74, 144, 226, 0.1));
+            border-radius: var(--border-radius);
+            padding: 60px 40px;
+            margin-bottom: 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .hero:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ff6b9d' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #FF6B9D, #FFB11B, #87CEEB, #7CFC00, #FF4500, #FF69B4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            color: var(--text-color);
+            opacity: 0.9;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 107, 157, 0.3);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* 组合信息卡片 */
+        .team-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .info-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .info-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .info-card i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .info-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        /* 成员筛选 */
+        .member-filter {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 10px 20px;
+            border-radius: 50px;
+            background-color: var(--card-bg);
+            border: 2px solid #eee;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+        
+        .dark-mode .filter-btn {
+            border-color: #444;
+        }
+        
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        /* 成员网格 */
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .member-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .member-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .member-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .member-card:hover .member-img {
+            transform: scale(1.05);
+        }
+        
+        .member-color {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+            z-index: 1;
+        }
+        
+        .member-name {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: white;
+            padding: 20px;
+            z-index: 2;
+        }
+        
+        .member-name h3 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .member-name p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+        
+        .card-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .member-basic {
+            margin-bottom: 20px;
+        }
+        
+        .member-basic p {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .member-basic i {
+            width: 20px;
+            color: var(--primary-color);
+            margin-right: 10px;
+        }
+        
+        .member-desc {
+            line-height: 1.7;
+            color: #555;
+            flex-grow: 1;
+        }
+        
+        .dark-mode .member-desc {
+            color: #ccc;
+        }
+        
+        .card-footer {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .dark-mode .card-footer {
+            border-top-color: #444;
+        }
+        
+        .view-more {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        .view-more:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        /* 时间线部分 */
+        .timeline-section {
+            margin-bottom: 60px;
+        }
+        
+        .section-title {
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .timeline:before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            margin-bottom: 40px;
+            position: relative;
+            width: 50%;
+            padding-right: 40px;
+        }
+        
+        .timeline-item:nth-child(even) {
+            margin-left: 50%;
+            padding-right: 0;
+            padding-left: 40px;
+        }
+        
+        .timeline-content {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+        
+        .timeline-content:after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 20px;
+            height: 20px;
+            background-color: var(--card-bg);
+            transform: rotate(45deg);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content:after {
+            right: -10px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content:after {
+            left: -10px;
+        }
+        
+        .timeline-date {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            top: 20px;
+            z-index: 1;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-dot {
+            right: -10px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -10px;
+        }
+        
+        /* 应援色展示 */
+        .colors-section {
+            margin-bottom: 60px;
+        }
+        
+        .colors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .color-item {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .color-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .color-preview {
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .color-info {
+            padding: 15px;
+            background-color: var(--card-bg);
+        }
+        
+        .color-info h4 {
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+        
+        .color-info p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .dark-mode .color-info p {
+            color: #aaa;
+        }
+        
+        /* 音乐播放器 */
+        .music-player {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 350px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            overflow: hidden;
+            transition: var(--transition);
+            transform: translateY(0);
+        }
+        
+        .music-player.minimized {
+            transform: translateY(calc(100% - 60px));
+        }
+        
+        .player-header {
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+        
+        .player-header h3 {
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .player-controls {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .song-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .album-cover {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .song-details {
+            flex-grow: 1;
+        }
+        
+        .song-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .song-artist {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .dark-mode .song-artist {
+            color: #aaa;
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background-color: #eee;
+            border-radius: 3px;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+        
+        .dark-mode .progress-container {
+            background-color: #444;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: var(--primary-color);
+            border-radius: 3px;
+            transition: width 0.1s linear;
+        }
+        
+        .time-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .dark-mode .time-info {
+            color: #aaa;
+        }
+        
+        .control-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            margin-top: 10px;
+        }
+        
+        .control-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .control-btn:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .dark-mode .control-btn:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        .play-pause {
+            background-color: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+        }
+        
+        .play-pause:hover {
+            transform: scale(1.05);
+        }
+        
+        .volume-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .volume-slider {
+            flex-grow: 1;
+            height: 4px;
+            background-color: #eee;
+            border-radius: 2px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .dark-mode .volume-slider {
+            background-color: #444;
+        }
+        
+        .volume-bar {
+            height: 100%;
+            width: 70%;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+        
+        /* 成员详情模态框 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: var(--transition);
+        }
+        
+        .close-modal:hover {
+            background: rgba(0,0,0,0.7);
+            transform: rotate(90deg);
+        }
+        
+        .modal-header {
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .modal-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .modal-color {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.4;
+        }
+        
+        .modal-name {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+        }
+        
+        .modal-name h2 {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+        }
+        
+        .modal-body {
+            padding: 30px;
+        }
+        
+        .member-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .member-details {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .detail-item {
+            margin-bottom: 20px;
+        }
+        
+        .detail-item h4 {
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .detail-item p {
+            line-height: 1.7;
+            color: #555;
+        }
+        
+        .dark-mode .detail-item p {
+            color: #ccc;
+        }
+        
+        .member-news {
+            background-color: rgba(0,0,0,0.02);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+        
+        .dark-mode .member-news {
+            background-color: rgba(255,255,255,0.05);
+        }
+        
+        .member-news h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .news-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .dark-mode .news-item {
+            border-bottom-color: #444;
+        }
+        
+        .news-item:last-child {
+            border-bottom: none;
+        }
+        
+        .news-date {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 5px;
+        }
+        
+        .news-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            background-color: var(--card-bg);
+            border-top: 1px solid #eee;
+        }
+        
+        .dark-mode footer {
+            border-top-color: #444;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .dark-mode .copyright {
+            color: #aaa;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .members-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline:before {
+                left: 20px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-right: 0;
+                padding-left: 50px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                margin-left: 0;
+                padding-left: 50px;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-dot,
+            .timeline-item:nth-child(even) .timeline-dot {
+                left: 10px;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-content:after,
+            .timeline-item:nth-child(even) .timeline-content:after {
+                left: -10px;
+                right: auto;
+            }
+            
+            .music-player {
+                width: calc(100% - 40px);
+                right: 20px;
+                bottom: 20px;
+            }
+        }
+        
+        /* 加载动画 */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* 返回顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 999;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <!-- 动态背景 -->
+    <div class="color-shift-bg"></div>
+    
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-music"></i>
+                <span>时代少年团</span>
+            </a>
+            <div class="nav-links">
+                <a href="#home">首页</a>
+                <a href="#members">成员介绍</a>
+                <a href="#timeline">最新动态</a>
+                <a href="#colors">应援色</a>
+                <a href="#about">关于我们</a>
+            </div>
+            <div class="nav-controls">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-sun"></i>
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- 主内容 -->
+    <div class="container">
+        <!-- 英雄区域 -->
+        <section class="hero" id="home">
+            <h1>时代少年团 TEENS IN TIMES</h1>
+            <p>时代少年团（Teens in Times，简称TNT）是由北京时代峰峻文化艺术发展有限公司推出的中国内地男子演唱组合，由马嘉祺、丁程鑫、宋亚轩、刘耀文、张真源、严浩翔、贺峻霖七人组成。2019年正式出道，以青春活力的形象和扎实的舞台实力迅速走红，成为当代青少年偶像的代表。</p>
+            <div class="cta-buttons">
+                
+            </div>
+        </section>
+        
+        <!-- 组合信息卡片 -->
+        <div class="team-cards">
+            <div class="info-card">
+                <i class="fas fa-calendar-alt"></i>
+                <h3>出道时间</h3>
+                <p>2019年11月23日正式出道，至今已走过6年辉煌历程。2025年举办"加冠礼"巡回演唱会，标志着少年们的成长与蜕变。</p>
+            </div>
+            <div class="info-card">
+                <i class="fas fa-trophy"></i>
+                <h3>荣誉成就</h3>
+                <p>获得微博年度影响力组合、星光大赏年度组合、东方风云榜最佳组合等多个重要奖项。2025年星光大赏投票以5842万星光值断层登顶。</p>
+            </div>
+            <div class="info-card">
+                <i class="fas fa-music"></i>
+                <h3>音乐作品</h3>
+                <p>发行《舞象之年》《乌托邦少年》《加冠》等多张专辑，代表作品包括《全校通报》《无尽的冒险》《梦游记》《爆米花》等。</p>
+            </div>
+        </div>
+        
+        <!-- 成员介绍 -->
+        <section id="members">
+            <h2 class="section-title">成员介绍</h2>
+            <div class="member-filter">
+                <button class="filter-btn active" data-filter="all">全部成员</button>
+                <button class="filter-btn" data-filter="vocal">主唱</button>
+                <button class="filter-btn" data-filter="dance">舞蹈</button>
+                <button class="filter-btn" data-filter="rap">说唱</button>
+            </div>
+            <div class="members-grid" id="membersContainer">
+                <!-- 成员卡片将通过JavaScript动态生成 -->
+            </div>
+        </section>
+        
+        <!-- 时间线 -->
+        <section class="timeline-section" id="timeline">
+            <h2 class="section-title">最新动态</h2>
+            <div class="timeline">
+                <!-- 时间线内容将通过JavaScript动态生成 -->
+            </div>
+        </section>
+        
+        <!-- 应援色展示 -->
+        <section class="colors-section" id="colors">
+            <h2 class="section-title">应援色展示</h2>
+            <div class="colors-grid">
+                <!-- 应援色卡片将通过JavaScript动态生成 -->
+            </div>
+        </section>
+        
+        <!-- 关于我们 -->
+        <section id="about">
+            <h2 class="section-title">关于我们</h2>
+            <div class="info-card">
+                <p>本网站为时代少年团粉丝非官方应援站，致力于为粉丝们提供最新、最全的团体资讯、成员介绍和应援支持。所有内容均来自公开信息整理，如有任何问题或建议，欢迎通过社交媒体联系我们。</p>
+                <p style="margin-top: 15px;">时代少年团官方社交账号：</p>
+                <div style="display: flex; gap: 20px; margin-top: 15px;">
+                    <a href="#" style="color: var(--primary-color); text-decoration: none;">
+                        <i class="fab fa-weibo"></i> 微博
+                    </a>
+                    <a href="#" style="color: var(--primary-color); text-decoration: none;">
+                        <i class="fab fa-bilibili"></i> B站
+                    </a>
+                    <a href="#" style="color: var(--primary-color); text-decoration: none;">
+                        <i class="fab fa-douyin"></i> 抖音
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- 音乐播放器 -->
+    <div class="music-player" id="musicPlayer">
+        <div class="player-header" id="playerToggle">
+            <h3><i class="fas fa-music"></i> 正在播放</h3>
+            <i class="fas fa-chevron-down" id="playerIcon"></i>
+        </div>
+        <div class="player-controls">
+            <div class="song-info">
+                <img src="https://picsum.photos/60/60?random=1" alt="专辑封面" class="album-cover" id="albumCover">
+                <div class="song-details">
+                    <div class="song-title" id="songTitle">雨爱</div>
+                    <div class="song-artist" id="songArtist">时代少年团</div>
+                </div>
+            </div>
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="time-info">
+                <span id="currentTime">0:00</span>
+                <span id="duration">3:45</span>
+            </div>
+            <div class="control-buttons">
+                <button class="control-btn" id="prevBtn" disabled>
+                    <i class="fas fa-step-backward"></i>
+                </button>
+                <button class="control-btn play-pause" id="playPauseBtn">
+                    <i class="fas fa-play" id="playIcon"></i>
+                </button>
+                <button class="control-btn" id="nextBtn" disabled>
+                    <i class="fas fa-step-forward"></i>
+                </button>
+            </div>
+            <div class="volume-container">
+                <i class="fas fa-volume-up"></i>
+                <div class="volume-slider" id="volumeSlider">
+                    <div class="volume-bar" id="volumeBar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 音频元素 -->
+    <audio id="audioPlayer" preload="metadata">
+        <!-- 这里使用一个示例音频URL，实际使用时需要替换为有效的音频文件 -->
+        <source src="1.mp3" type="audio/mpeg">
+        您的浏览器不支持音频元素。
+    </audio>
+    
+    <!-- 成员详情模态框 -->
+    <div class="modal" id="memberModal">
+        <div class="modal-content">
+            <div class="close-modal" id="closeModal">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="modal-header">
+                <img src="" alt="成员图片" class="modal-img" id="modalImg">
+                <div class="modal-color" id="modalColor"></div>
+                <div class="modal-name">
+                    <h2 id="modalName">成员姓名</h2>
+                    <p id="modalRole">成员角色</p>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div id="modalDetails">
+                    <!-- 详情内容将通过JavaScript动态生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 返回顶部按钮 -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-links">
+            <a href="#home">首页</a>
+            <a href="#members">成员介绍</a>
+            <a href="#timeline">最新动态</a>
+            <a href="#colors">应援色</a>
+            <a href="#about">关于我们</a>
+        </div>
+        <p class="copyright">© 2026 时代少年团(TNT) 粉丝站 | 本页面为粉丝创作，非官方页面 | 数据更新至2026年5月</p>
+        <p class="copyright">应援色切换效果：每10秒自动切换一种成员应援色</p>
+    </footer>
+    
+    <script>
+        // 成员数据
+        const members = [
+            {
+                id: 1,
+                name: "马嘉祺",
+                role: "队长、主唱",
+                category: "vocal",
+                birth: "2002年12月12日",
+                birthplace: "河南郑州",
+                color: "#8A2BE2", // 月白星紫
+                img: "1.jpg",
+                desc: "时代少年团队长，拥有清澈嗓音和出色的领导能力。在团队中负责主唱部分，以其独特的音色和扎实的唱功受到广泛认可。",
+                details: {
+                    specialty: "唱歌、舞蹈、钢琴",
+                    height: "180cm",
+                    hobbies: "阅读、听音乐、看电影",
+                    personality: "沉稳、负责、有领导力"
+                },
+                latestNews: [
+                    {date: "2026-04-15", title: "马嘉祺个人单曲《光》发布，24小时播放量破千万"},
+                    {date: "2026-03-22", title: "参加《歌手2026》节目，展现卓越唱功"},
+                    {date: "2026-02-10", title: "担任青春励志剧《追光少年》男主角"}
+                ]
+            },
+            {
+                id: 2,
+                name: "丁程鑫",
+                role: "主舞、副唱",
+                category: "dance",
+                birth: "2002年2月24日",
+                birthplace: "四川资阳",
+                color: "#FFD700", // 琥珀色
+                img: "2.jpg",
+                desc: "团队主舞，舞蹈实力出众，舞台表现力极强。同时也在歌唱方面不断进步，是团队中不可或缺的全能型成员。",
+                details: {
+                    specialty: "舞蹈、表演、声乐",
+                    height: "182cm",
+                    hobbies: "跳舞、健身、摄影",
+                    personality: "热情、努力、有表现力"
+                },
+                latestNews: [
+                    {date: "2026-05-05", title: "丁程鑫编舞作品《风暴》获国际舞蹈大赛银奖"},
+                    {date: "2026-04-18", title: "主演电影《舞动青春》定档暑期"},
+                    {date: "2026-03-30", title: "担任《这！就是街舞》第五季明星队长"}
+                ]
+            },
+            {
+                id: 3,
+                name: "宋亚轩",
+                role: "主唱",
+                category: "vocal",
+                birth: "2004年3月4日",
+                birthplace: "山东滨州",
+                color: "#87CEEB", // 浅空天胧
+                img: "3.jpg",
+                desc: "拥有天籁般的嗓音，是团队的主唱担当。其独特的音色和丰富的情感表达使他在众多歌曲中表现出色，深受粉丝喜爱。",
+                details: {
+                    specialty: "唱歌、吉他、创作",
+                    height: "183cm",
+                    hobbies: "弹吉他、写歌、看动漫",
+                    personality: "温柔、感性、有创造力"
+                },
+                latestNews: [
+                    {date: "2026-05-10", title: "宋亚轩首张个人EP《星空下的对话》发布"},
+                    {date: "2026-04-25", title: "为热门电视剧《时光代理人》演唱主题曲"},
+                    {date: "2026-03-15", title: "举办首次个人线上音乐会，观看人数突破500万"}
+                ]
+            },
+            {
+                id: 4,
+                name: "刘耀文",
+                role: "主舞、Rapper",
+                category: "dance",
+                birth: "2005年9月23日",
+                birthplace: "重庆",
+                color: "#B0C4DE", // 耀月银白
+                img: "4.jpg",
+                desc: "团队中的舞蹈和门面担当，舞台表现力极强。以其出色的舞蹈技巧和帅气的外表收获了大量粉丝的喜爱。",
+                details: {
+                    specialty: "舞蹈、Rap、表演",
+                    height: "185cm",
+                    hobbies: "跳舞、打篮球、时尚穿搭",
+                    personality: "自信、帅气、有舞台魅力"
+                },
+                latestNews: [
+                    {date: "2026-05-08", title: "刘耀文成为国际知名运动品牌代言人"},
+                    {date: "2026-04-20", title: "个人单曲《耀》登顶音乐排行榜"},
+                    {date: "2026-03-12", title: "参演悬疑剧《迷雾追踪者》获得好评"}
+                ]
+            },
+            {
+                id: 5,
+                name: "张真源",
+                role: "主唱",
+                category: "vocal",
+                birth: "2003年4月16日",
+                birthplace: "重庆",
+                color: "#7CFC00", // 水玉暖炽
+                img: "5.jpg",
+                desc: "拥有温暖嗓音的主唱，演唱富有感染力。在团队中负责和声和高音部分，以其稳定的唱功和温柔的性格受到喜爱。",
+                details: {
+                    specialty: "声乐、钢琴、作曲",
+                    height: "181cm",
+                    hobbies: "弹钢琴、写歌、读书",
+                    personality: "温柔、细心、有亲和力"
+                },
+                latestNews: [
+                    {date: "2026-05-12", title: "张真源创作单曲《暖光》获年度金曲奖"},
+                    {date: "2026-04-28", title: "参与音乐剧《音乐之声》主演，广受好评"},
+                    {date: "2026-03-20", title: "举办个人音乐分享会，展示多首原创作品"}
+                ]
+            },
+            {
+                id: 6,
+                name: "严浩翔",
+                role: "Rapper",
+                category: "rap",
+                birth: "2004年8月16日",
+                birthplace: "广东广州",
+                color: "#FF4500", // 珊瑚红
+                img: "6.jpg",
+                desc: "团队中的Rapper担当，拥有独特的rap风格和创作能力。其舞台表现力强，个人特色鲜明，是团队中的重要成员。",
+                details: {
+                    specialty: "Rap、创作、舞蹈",
+                    height: "182cm",
+                    hobbies: "写词、街舞、时尚",
+                    personality: "有个性、有才华、有表现力"
+                },
+                latestNews: [
+                    {date: "2026-05-03", title: "严浩翔个人mixtape《X》发布，展示创作实力"},
+                    {date: "2026-04-15", title: "参加《中国新说唱2026》担任特邀嘉宾"},
+                    {date: "2026-03-05", title: "与知名音乐人合作单曲《破晓》获好评"}
+                ]
+            },
+            {
+                id: 7,
+                name: "贺峻霖",
+                role: "副唱、舞者",
+                category: "vocal",
+                birth: "2004年6月15日",
+                birthplace: "四川成都",
+                color: "#FF69B4", // 春海月明
+                img: "7.jpg",
+                desc: "团队中的全能型成员，唱跳俱佳，综艺感强。以其多才多艺和活泼开朗的性格成为团队中的活力担当。",
+                details: {
+                    specialty: "唱歌、舞蹈、主持",
+                    height: "182cm",
+                    hobbies: "主持、表演、美食探索",
+                    personality: "活泼、幽默、多才多艺"
+                },
+                latestNews: [
+                    {date: "2026-05-01", title: "贺峻霖担任《快乐大本营2026》常驻嘉宾"},
+                    {date: "2026-04-10", title: "个人综艺《霖霖的日常》播放量破亿"},
+                    {date: "2026-03-18", title: "参与配音动画电影《奇幻森林历险记》"}
+                ]
+            }
+        ];
+        
+        // 时间线数据
+        const timelineData = [
+            {date: "2026-05-15", title: "时代少年团全新单曲《破晓》发布", description: "新歌上线24小时内突破千万播放量，空降各大音乐榜单榜首"},
+            {date: "2026-04-28", title: "时代少年团荣获年度最佳组合奖", description: "在音乐盛典上获得年度最佳组合奖项，成员们现场表演了精彩舞台"},
+            {date: "2026-04-10", title: "时代少年团2026巡回演唱会启动", description: "宣布将在北京、上海、广州、成都等城市举办巡回演唱会"},
+            {date: "2026-03-22", title: "时代少年团成员参与综艺录制", description: "多位成员分别参与《奔跑吧》《王牌对王牌》等热门综艺录制"},
+            {date: "2026-02-14", title: "时代少年团元宵晚会表演", description: "在央视元宵晚会上表演歌曲《灯火里的中国》，获得广泛好评"},
+            {date: "2026-01-01", title: "时代少年团新年祝福视频发布", description: "成员们通过视频向粉丝送上新年祝福，宣布2026年新计划"}
+        ];
+        
+        // 应援色数据
+        const memberColors = [
+            {name: "马嘉祺", color: "#8A2BE2", desc: "月白星紫"},
+            {name: "丁程鑫", color: "#FFD700", desc: "琥珀色"},
+            {name: "宋亚轩", color: "#87CEEB", desc: "浅空天胧"},
+            {name: "刘耀文", color: "#B0C4DE", desc: "耀月银白"},
+            {name: "张真源", color: "#7CFC00", desc: "水玉暖炽"},
+            {name: "严浩翔", color: "#FF4500", desc: "珊瑚红"},
+            {name: "贺峻霖", color: "#FF69B4", desc: "春海月明"}
+        ];
+        
+        // 音乐播放器数据
+        const currentSong = {
+            title: "雨爱",
+            artist: "时代少年团",
+            src: "1.mp3",
+            cover: "https://picsum.photos/60/60?random=1"
+        };
+        
+        // DOM元素
+        const audioPlayer = document.getElementById('audioPlayer');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const playIcon = document.getElementById('playIcon');
+        const progressBar = document.getElementById('progressBar');
+        const progressContainer = document.getElementById('progressContainer');
+        const currentTimeEl = document.getElementById('currentTime');
+        const durationEl = document.getElementById('duration');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const volumeBar = document.getElementById('volumeBar');
+        const membersContainer = document.getElementById('membersContainer');
+        const memberModal = document.getElementById('memberModal');
+        const closeModal = document.getElementById('closeModal');
+        const modalImg = document.getElementById('modalImg');
+        const modalColor = document.getElementById('modalColor');
+        const modalName = document.getElementById('modalName');
+        const modalRole = document.getElementById('modalRole');
+        const modalDetails = document.getElementById('modalDetails');
+        const playerToggle = document.getElementById('playerToggle');
+        const playerIcon = document.getElementById('playerIcon');
+        const musicPlayer = document.getElementById('musicPlayer');
+        const themeToggle = document.getElementById('themeToggle');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const timelineContainer = document.querySelector('.timeline');
+        const colorsGrid = document.querySelector('.colors-grid');
+        const backToTop = document.getElementById('backToTop');
+        const playMusicBtn = document.getElementById('playMusicBtn');
+        const navLinks = document.querySelectorAll('.nav-links a');
+        
+        // 当前选中的成员
+        let currentMember = null;
+        // 当前筛选器
+        let currentFilter = 'all';
+        // 音乐播放器是否最小化
+        let playerMinimized = false;
+        
+        // 初始化成员卡片
+        function initMemberCards() {
+            membersContainer.innerHTML = '';
+            
+            const filteredMembers = currentFilter === 'all' 
+                ? members 
+                : members.filter(member => member.category === currentFilter);
+            
+            filteredMembers.forEach(member => {
+                const card = document.createElement('div');
+                card.className = 'member-card';
+                card.dataset.id = member.id;
+                card.dataset.category = member.category;
+                
+                card.innerHTML = `
+                    <div class="card-header">
+                        <img src="${member.img}" alt="${member.name}" class="member-img">
+                        <div class="member-color" style="background-color: ${member.color};"></div>
+                        <div class="member-name">
+                            <h3>${member.name}</h3>
+                            <p>${member.role}</p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="member-basic">
+                            <p><i class="fas fa-birthday-cake"></i> ${member.birth}</p>
+                            <p><i class="fas fa-map-marker-alt"></i> ${member.birthplace}</p>
+                        </div>
+                        <p class="member-desc">${member.desc}</p>
+                        <div class="card-footer">
+                            <button class="view-more" data-id="${member.id}">查看详情</button>
+                        </div>
+                    </div>
+                `;
+                
+                membersContainer.appendChild(card);
+                
+                // 添加点击事件
+                const viewMoreBtn = card.querySelector('.view-more');
+                viewMoreBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    showMemberDetails(member.id);
+                });
+                
+                card.addEventListener('click', () => {
+                    showMemberDetails(member.id);
+                });
+            });
+        }
+        
+        // 显示成员详情
+        function showMemberDetails(memberId) {
+            const member = members.find(m => m.id === memberId);
+            if (!member) return;
+            
+            currentMember = member;
+            
+            // 更新模态框内容
+            modalImg.src = member.img;
+            modalImg.alt = member.name;
+            modalColor.style.backgroundColor = member.color;
+            modalName.textContent = member.name;
+            modalRole.textContent = member.role;
+            
+            // 更新详情内容
+            modalDetails.innerHTML = `
+                <div class="member-details">
+                    <div>
+                        <div class="detail-item">
+                            <h4><i class="fas fa-user"></i> 基本信息</h4>
+                            <p><strong>出生日期：</strong>${member.birth}</p>
+                            <p><strong>出生地：</strong>${member.birthplace}</p>
+                            <p><strong>身高：</strong>${member.details.height}</p>
+                        </div>
+                        <div class="detail-item">
+                            <h4><i class="fas fa-star"></i> 特长</h4>
+                            <p>${member.details.specialty}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="detail-item">
+                            <h4><i class="fas fa-heart"></i> 兴趣爱好</h4>
+                            <p>${member.details.hobbies}</p>
+                        </div>
+                        <div class="detail-item">
+                            <h4><i class="fas fa-smile"></i> 性格特点</h4>
+                            <p>${member.details.personality}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="member-news">
+                    <h3><i class="fas fa-newspaper"></i> 最新动态</h3>
+                    ${member.latestNews.map(news => `
+                        <div class="news-item">
+                            <div class="news-date">${news.date}</div>
+                            <div class="news-title">${news.title}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            // 显示模态框
+            memberModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            
+            // 更新页面主题色为当前成员应援色
+            updateThemeColor(member.color);
+        }
+        
+        // 更新主题色
+        function updateThemeColor(color) {
+            const root = document.documentElement;
+            // 从颜色生成一个互补色作为次要颜色
+            const secondaryColor = lightenColor(color, 30);
+            root.style.setProperty('--primary-color', color);
+            root.style.setProperty('--secondary-color', secondaryColor);
+        }
+        
+        // 颜色变亮函数
+        function lightenColor(color, percent) {
+            const num = parseInt(color.slice(1), 16);
+            const amt = Math.round(2.55 * percent);
+            const R = (num >> 16) + amt;
+            const G = (num >> 8 & 0x00FF) + amt;
+            const B = (num & 0x0000FF) + amt;
+            
+            return "#" + (
+                0x1000000 + 
+                (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 + 
+                (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 + 
+                (B < 255 ? B < 1 ? 0 : B : 255)
+            ).toString(16).slice(1);
+        }
+        
+        // 自动轮换主题色
+        let colorIndex = 0;
+        function rotateThemeColor() {
+            const colors = members.map(member => member.color);
+            updateThemeColor(colors[colorIndex]);
+            colorIndex = (colorIndex + 1) % colors.length;
+        }
+        
+        // 初始化时间线
+        function initTimeline() {
+            timelineContainer.innerHTML = '';
+            
+            timelineData.forEach((item, index) => {
+                const isEven = index % 2 === 0;
+                const timelineItem = document.createElement('div');
+                timelineItem.className = `timeline-item ${isEven ? '' : 'even'}`;
+                
+                timelineItem.innerHTML = `
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">
+                            <i class="fas fa-calendar"></i>
+                            ${item.date}
+                        </div>
+                        <h4>${item.title}</h4>
+                        <p>${item.description}</p>
+                    </div>
+                `;
+                
+                timelineContainer.appendChild(timelineItem);
+            });
+        }
+        
+        // 初始化应援色展示
+        function initColorDisplay() {
+            colorsGrid.innerHTML = '';
+            
+            memberColors.forEach(colorData => {
+                const colorItem = document.createElement('div');
+                colorItem.className = 'color-item';
+                
+                // 计算文字颜色（确保在深色背景上可读）
+                const textColor = getContrastColor(colorData.color);
+                
+                colorItem.innerHTML = `
+                    <div class="color-preview" style="background-color: ${colorData.color}; color: ${textColor}">
+                        ${colorData.name}
+                    </div>
+                    <div class="color-info">
+                        <h4>${colorData.name}</h4>
+                        <p>${colorData.desc}</p>
+                    </div>
+                `;
+                
+                colorsGrid.appendChild(colorItem);
+            });
+        }
+        
+        // 获取对比色
+        function getContrastColor(hexColor) {
+            // 转换 hex 为 RGB
+            const r = parseInt(hexColor.substr(1, 2), 16);
+            const g = parseInt(hexColor.substr(3, 2), 16);
+            const b = parseInt(hexColor.substr(5, 2), 16);
+            
+            // 计算亮度
+            const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+            
+            // 如果亮度高，使用黑色文字，否则使用白色文字
+            return brightness > 128 ? '#000000' : '#FFFFFF';
+        }
+        
+        // 音乐播放器功能
+        function initMusicPlayer() {
+            // 设置音频源
+            audioPlayer.src = currentSong.src;
+            document.getElementById('albumCover').src = currentSong.cover;
+            document.getElementById('songTitle').textContent = currentSong.title;
+            document.getElementById('songArtist').textContent = currentSong.artist;
+            
+            // 播放/暂停功能
+            playPauseBtn.addEventListener('click', togglePlayPause);
+            
+            // 进度条功能
+            audioPlayer.addEventListener('timeupdate', updateProgress);
+            progressContainer.addEventListener('click', setProgress);
+            
+            // 音量控制
+            volumeSlider.addEventListener('click', setVolume);
+            
+            // 音频加载完成
+            audioPlayer.addEventListener('loadedmetadata', () => {
+                durationEl.textContent = formatTime(audioPlayer.duration);
+            });
+            
+            // 音频播放结束
+            audioPlayer.addEventListener('ended', () => {
+                playIcon.className = 'fas fa-play';
+                audioPlayer.currentTime = 0;
+                updateProgress();
+            });
+            
+            // 播放器最小化/最大化
+            playerToggle.addEventListener('click', () => {
+                playerMinimized = !playerMinimized;
+                if (playerMinimized) {
+                    musicPlayer.classList.add('minimized');
+                    playerIcon.className = 'fas fa-chevron-up';
+                } else {
+                    musicPlayer.classList.remove('minimized');
+                    playerIcon.className = 'fas fa-chevron-down';
+                }
+            });
+        }
+        
+        // 切换播放/暂停
+        function togglePlayPause() {
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                playIcon.className = 'fas fa-pause';
+            } else {
+                audioPlayer.pause();
+                playIcon.className = 'fas fa-play';
+            }
+        }
+        
+        // 更新进度条
+        function updateProgress() {
+            const percent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+            progressBar.style.width = `${percent}%`;
+            currentTimeEl.textContent = formatTime(audioPlayer.currentTime);
+        }
+        
+        // 设置进度
+        function setProgress(e) {
+            const width = this.clientWidth;
+            const clickX = e.offsetX;
+            const duration = audioPlayer.duration;
+            
+            audioPlayer.currentTime = (clickX / width) * duration;
+        }
+        
+        // 设置音量
+        function setVolume(e) {
+            const width = this.clientWidth;
+            const clickX = e.offsetX;
+            const volume = clickX / width;
+            
+            audioPlayer.volume = volume;
+            volumeBar.style.width = `${volume * 100}%`;
+        }
+        
+        // 格式化时间
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return "0:00";
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+        
+        // 关闭模态框
+        closeModal.addEventListener('click', () => {
+            memberModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+        
+        // 点击模态框外部关闭
+        memberModal.addEventListener('click', (e) => {
+            if (e.target === memberModal) {
+                memberModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            // 初始化成员卡片
+            initMemberCards();
+            
+            // 初始化时间线
+            initTimeline();
+            
+            // 初始化应援色展示
+            initColorDisplay();
+            
+            // 初始化音乐播放器
+            initMusicPlayer();
+            
+            // 设置初始主题色
+            updateThemeColor(members[0].color);
+            
+            // 设置自动轮换主题色（每10秒）
+            setInterval(rotateThemeColor, 10000);
+            
+            // 主题切换
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+            });
+            
+            // 成员筛选
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // 移除所有按钮的active类
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // 为当前按钮添加active类
+                    button.classList.add('active');
+                    // 更新当前筛选器
+                    currentFilter = button.dataset.filter;
+                    // 重新初始化成员卡片
+                    initMemberCards();
+                });
+            });
+            
+            // 返回顶部按钮
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTop.classList.add('visible');
+                } else {
+                    backToTop.classList.remove('visible');
+                }
+            });
+            
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // 播放音乐按钮
+            playMusicBtn.addEventListener('click', () => {
+                // 如果播放器最小化，先展开
+                if (playerMinimized) {
+                    musicPlayer.classList.remove('minimized');
+                    playerIcon.className = 'fas fa-chevron-down';
+                    playerMinimized = false;
+                }
+                
+                // 播放音乐
+                if (audioPlayer.paused) {
+                    audioPlayer.play();
+                    playIcon.className = 'fas fa-pause';
+                }
+            });
+            
+            // 导航栏平滑滚动
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // 键盘快捷键
+            document.addEventListener('keydown', (e) => {
+                // 空格键切换播放/暂停
+                if (e.code === 'Space' && !e.target.matches('input, textarea')) {
+                    e.preventDefault();
+                    togglePlayPause();
+                }
+                
+                // ESC键关闭模态框
+                if (e.code === 'Escape' && memberModal.style.display === 'flex') {
+                    memberModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
